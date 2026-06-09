@@ -1,4 +1,7 @@
-# Agent 2 — Lead Gen + Enrichment Engine
+﻿# Agent 2 â€” Lead Gen + Enrichment Engine
+
+![CI](https://github.com/MuhammadOmerAbid/agent-leadgen/actions/workflows/ci.yml/badge.svg) ![License](https://img.shields.io/github/license/MuhammadOmerAbid/agent-leadgen) ![Python](https://img.shields.io/badge/python-3.11+-blue)
+
 
 Finds prospects (clients or professors), enriches their profiles, drafts personalized cold emails, gets your Telegram approval, then sends via Instantly/Smartlead. Tracks replies and drafts suggested responses.
 
@@ -9,11 +12,11 @@ Finds prospects (clients or professors), enriches their profiles, drafts persona
 ## What It Does
 
 1. You define a campaign (Clients or Professors) and your target profile (ICP)
-2. Leads are pulled — Apollo API for clients; CSV/manual import for professors
+2. Leads are pulled â€” Apollo API for clients; CSV/manual import for professors
 3. Each lead is verified (email validation) and enriched (recent activity, papers, etc.)
 4. Claude drafts a personalized first email + follow-up sequence referencing something specific about each person
 5. Drafts go to you for approval (batch approve via Telegram or a simple review table)
-6. Approved sequences are sent via Instantly or Smartlead API — from warmed, separate sending domains only
+6. Approved sequences are sent via Instantly or Smartlead API â€” from warmed, separate sending domains only
 7. Replies are tracked; when one arrives, Claude drafts a suggested reply for your approval
 
 **No email is ever sent without your explicit approval.**
@@ -22,12 +25,12 @@ Finds prospects (clients or professors), enriches their profiles, drafts persona
 
 ## Two Campaign Types
 
-### Campaign A — Client Outreach
+### Campaign A â€” Client Outreach
 - Target: startup founders, CTOs, tech leads who need web development
 - Source: Apollo API (search by industry, company size, title, location)
 - Personalization: recent company news, product launches, funding rounds
 
-### Campaign B — Professor Outreach
+### Campaign B â€” Professor Outreach
 - Target: foreign university professors for academic collaboration / research
 - Source: CSV import from faculty pages or Google Scholar exports
 - Personalization: references their most recent published paper or research area
@@ -73,12 +76,12 @@ python agent_leadgen/main.py send --campaign "US Startups June"
 
 | Rule | Default |
 |------|---------|
-| Sending domain | Separate domain only — never your main domain |
+| Sending domain | Separate domain only â€” never your main domain |
 | Warm-up | Must be completed before any send (assumed done in Instantly/Smartlead) |
 | Daily send cap per inbox | 30 emails max |
-| Email verification | Required — bounces blocked before send |
+| Email verification | Required â€” bounces blocked before send |
 | Unsubscribe link | Included in every email automatically |
-| Human approval gate | Required before every send — no exceptions |
+| Human approval gate | Required before every send â€” no exceptions |
 
 ---
 
@@ -102,19 +105,19 @@ DAILY_SEND_CAP=30          # Max emails per inbox per day
 SQLite file: `data/leadgen.db`
 
 Tables:
-- `campaigns` — campaign definitions and settings
-- `leads` — all prospects with enrichment data
-- `emails` — drafted email sequences per lead
-- `approvals` — approval status per email
-- `sent` — send history with timestamps
-- `replies` — incoming replies and AI-drafted responses
+- `campaigns` â€” campaign definitions and settings
+- `leads` â€” all prospects with enrichment data
+- `emails` â€” drafted email sequences per lead
+- `approvals` â€” approval status per email
+- `sent` â€” send history with timestamps
+- `replies` â€” incoming replies and AI-drafted responses
 
 ---
 
 ## Approval Flow (Telegram)
 
 ```
-📧 New batch ready for approval — "US Startups June"
+ðŸ“§ New batch ready for approval â€” "US Startups June"
 5 emails drafted
 
 Lead 1: John Smith, CTO @ Acme Inc
@@ -123,7 +126,7 @@ Subject: Your recent product launch + a quick idea
 "Hi John, saw that Acme just launched..."
 [Full email in message]
 
-[✅ Approve] [✏️ Edit] [🚫 Skip]
+[âœ… Approve] [âœï¸ Edit] [ðŸš« Skip]
 ```
 
 ---
@@ -131,7 +134,7 @@ Subject: Your recent product launch + a quick idea
 ## Schedule
 
 - Lead pull: configurable (e.g. weekly)
-- Send: configurable (e.g. weekdays 9 AM–12 PM, respecting daily cap)
+- Send: configurable (e.g. weekdays 9 AMâ€“12 PM, respecting daily cap)
 - Reply check: every 2 hours during business hours
 
 Configurable in `agent_leadgen/config/schedule.py`.
@@ -140,8 +143,8 @@ Configurable in `agent_leadgen/config/schedule.py`.
 
 ## Safety
 
-- Official APIs only — no scraping of Apollo, LinkedIn, or professor sites
-- Separate sending domains enforced — code checks and blocks sends from main domain
-- Per-inbox daily cap enforced — code stops sending when cap is reached
-- Unsubscribe handling — opt-outs are logged and respected automatically
+- Official APIs only â€” no scraping of Apollo, LinkedIn, or professor sites
+- Separate sending domains enforced â€” code checks and blocks sends from main domain
+- Per-inbox daily cap enforced â€” code stops sending when cap is reached
+- Unsubscribe handling â€” opt-outs are logged and respected automatically
 - Every single outbound action requires your approval first
